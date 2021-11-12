@@ -17,24 +17,33 @@ import java.util.Optional;
 public class PrincipalDetails implements UserDetails {
     private Member member;
 
+
+
     public PrincipalDetails(Member member) {
         this.member = member;
     }
 
+    public Member getMember() {
+        return member;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        member.getRoleList().forEach(r->{
+            authorities.add(()->r);
+        });
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return member.getUsername();
     }
 
     @Override
