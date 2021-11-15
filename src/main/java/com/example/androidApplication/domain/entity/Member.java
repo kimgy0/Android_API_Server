@@ -22,7 +22,15 @@ public class Member {
     private String email;
     private String username;
     private String password;
-    private String roles;
+
+    @Column(name = "roles", updatable = false)
+    private String roles = "ROLE_USER";
+
+    public Member(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 
     public List<String> getRoleList(){
         if(this.roles.length()>0){
@@ -31,11 +39,6 @@ public class Member {
         return new ArrayList<>();
     }
 
-    public Member(Long id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
 
     @Override
     public String toString() {

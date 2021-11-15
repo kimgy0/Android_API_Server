@@ -1,6 +1,7 @@
 package com.example.androidApplication.config;
 
 import com.example.androidApplication.Jwt.JwtAuthenticationFilter;
+import com.example.androidApplication.Jwt.JwtAuthorizationFilter;
 import com.example.androidApplication.filter.LoginFilter;
 import com.example.androidApplication.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                  * */
 
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),memberRepository))
                 .authorizeRequests()
                 .antMatchers("/api/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
