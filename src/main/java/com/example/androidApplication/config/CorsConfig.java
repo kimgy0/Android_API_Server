@@ -23,7 +23,7 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); //javascript 처리 여부를 허용합니다.
-        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedOrigins(Arrays.asList("http://15.165.219.73:8080/"));
 //        Arrays.asList("http://15.165.219.73:8080/","http://localhost:8080/")
         //모든 ip에 대한 응답 허용
         config.setAllowedMethods(Arrays.asList("GET","POST","PUT","PATCH","OPTIONS","DELETE"));
