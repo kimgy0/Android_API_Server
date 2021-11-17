@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,9 @@ public class MemberController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/join")
-    public Object login(@Valid @RequestBody MemberManageDto.MemberJoinDto memberJoin, BindingResult bindingResult){
+    public Object login(@Valid @RequestBody MemberManageDto.MemberJoinDto memberJoin,
+                        BindingResult bindingResult,
+                        HttpServletResponse response) throws IOException {
 
         List<FieldErrorDto.ErrorDto> errorDtoList = new ArrayList<>();
 
@@ -40,6 +45,7 @@ public class MemberController {
         }
 
         if(bindingResult.hasErrors()){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return errorDtoList;
         }
         Member member = new Member(memberJoin.getEmail(), memberJoin.getUsername(),bCryptPasswordEncoder.encode(memberJoin.getPassword()));
