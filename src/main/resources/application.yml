@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 2000
 
 spring:
   datasource:
@@ -12,7 +12,9 @@ spring:
     hibernate:
       ddl-auto: create
     properties:
+
       hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql: true
       # show_sql: true
 

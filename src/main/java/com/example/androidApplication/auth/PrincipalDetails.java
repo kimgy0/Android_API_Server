@@ -23,6 +23,10 @@ public class PrincipalDetails implements UserDetails {
         this.member = member;
     }
 
+    public Long getId(){
+        return member.getId();
+    }
+
     public Member getMember() {
         return member;
     }

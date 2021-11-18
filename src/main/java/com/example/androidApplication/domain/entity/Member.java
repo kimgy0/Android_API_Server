@@ -3,7 +3,6 @@ package com.example.androidApplication.domain.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +23,11 @@ public class Member {
 
     @Column(name = "roles", updatable = false)
     private String roles = "ROLE_USER";
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Participate> participate = new ArrayList<>();
+
+
 
     public Member(String email, String username, String password) {
         this.email = email;
