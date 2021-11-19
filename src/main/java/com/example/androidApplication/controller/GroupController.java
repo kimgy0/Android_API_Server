@@ -8,8 +8,10 @@ import com.example.androidApplication.domain.entity.Group;
 import com.example.androidApplication.domain.entity.Member;
 import com.example.androidApplication.domain.entity.Participate;
 import com.example.androidApplication.domain.entity.TimeList;
+import com.example.androidApplication.service.GroupService;
 import com.example.androidApplication.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -29,15 +31,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@Slf4j
 public class GroupController {
 
-    private final MemberService memberService;
+    private final GroupService groupService;
 
     @PostMapping("/createGroup")
     public Object createGroup(@Valid @RequestBody GroupManageDto.GroupRegDto groupRegDto, BindingResult bindingResult,
                            @AuthenticationPrincipal PrincipalDetails principalDetails,
                            HttpServletResponse response){
 
+        log.info("create group 진입");
         List<FieldErrorDto.ErrorDto> errorDtoList = new ArrayList<>();
 
         for (ObjectError allError : bindingResult.getAllErrors()) {
@@ -50,7 +54,7 @@ public class GroupController {
             return errorDtoList;
         }
 
-        memberService.addGroup(principalDetails.getId(),groupRegDto);
+        groupService.addGroup(principalDetails.getId(),groupRegDto);
         return null;
     }
 

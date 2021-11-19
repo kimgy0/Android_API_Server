@@ -37,47 +37,63 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String jwtHeader = request.getHeader("Authorization");
-        if(jwtHeader == null || !jwtHeader.startsWith("Bearer ")){
+        if (jwtHeader == null || !jwtHeader.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
         }
 
         String jwtToken = request.getHeader("Authorization").replace("Bearer ", "");
 
+        log.info("this is {}", jwtToken);
+
         DecodedJWT cos = JWT.require(Algorithm.HMAC512("cos")).build().verify(jwtToken);
-        Long id = Long.parseLong(cos.getClaim("id").asString());
+        Long id = cos.getClaim("id").asLong();
         String username = cos.getClaim("username").asString();
 
-        if( id != null) {
-            Date expiresAt = cos.getExpiresAt();
-            if(expiresAt.getTime()>0){
-                long remain = expiresAt.getTime() - System.currentTimeMillis();
-                if(remain < refreshTime){
-                    Member findMember = memberRepository.findById(id).orElseThrow(() -> new NullPointerException("null"));
-                    PrincipalDetails principalDetails = new PrincipalDetails(findMember);
+        if (username != null) {
+            Member findMember = memberRepository.findById(id).orElseThrow(() -> new NullPointerException("not exist find user"));
+            PrincipalDetails principalDetails = new PrincipalDetails(findMember);
 
-                    Authentication authentication
-                            = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+            Authentication authentication
+                    = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
 
-                    String createJwt = JWT.create()
-                            .withSubject("cos")
-                            .withExpiresAt(new Date(System.currentTimeMillis()+(6000*10)))
-                            .withClaim("id", id)
-                            .withClaim("username",username )
-                            .sign(Algorithm.HMAC512("cos"));
-
-                    response.addHeader("Authorization", "Bearer "+createJwt);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                    response.addHeader("Authorization", createJwt);
-                    chain.doFilter(request, response);
-                }
-            }
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             response.addHeader("Authorization", jwtHeader);
             chain.doFilter(request, response);
         }
+
+//        if( id != null) {
+//            Date expiresAt = cos.getExpiresAt();
+//            if(expiresAt.getTime()>0){
+//                long remain = expiresAt.getTime() - System.currentTimeMillis();
+//                if(remain < refreshTime){
+//                    Member findMember = memberRepository.findById(id).orElseThrow(() -> new NullPointerException("null"));
+//                    PrincipalDetails principalDetails = new PrincipalDetails(findMember);
+//
+//                    Authentication authentication
+//                            = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+//
+//                    String createJwt = JWT.create()
+//                            .withSubject("cos")
+//                            .withExpiresAt(new Date(System.currentTimeMillis()+(6000*10)))
+//                            .withClaim("id", id)
+//                            .withClaim("username",username )
+//                            .sign(Algorithm.HMAC512("cos"));
+//
+//                    response.addHeader("Authorization", "Bearer "+createJwt);
+//                    SecurityContextHolder.getContext().setAuthentication(authentication);
+//                    response.addHeader("Authorization", createJwt);
+//                    chain.doFilter(request, response);
+//                }
+//            }
+//            log.info("인증");
+//            response.addHeader("Authorization", jwtHeader);
+//            chain.doFilter(request, response);
+//        }
+//    }
+
     }
 }

@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,13 +24,13 @@ public class TimeList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "time_id")
     private Long id;
-    private LocalDate alarmTime;
+    private LocalTime alarmTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public TimeList(LocalDate alarmTime) {
+    public TimeList(LocalTime alarmTime) {
         this.alarmTime = alarmTime;
     }
 

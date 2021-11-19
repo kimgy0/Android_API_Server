@@ -48,6 +48,7 @@ public class MemberController {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return errorDtoList;
         }
+
         Member member = new Member(memberJoin.getEmail(), memberJoin.getUsername(),bCryptPasswordEncoder.encode(memberJoin.getPassword()));
         log.info("join member = {}",member);
         return memberService.saveMember(member);
