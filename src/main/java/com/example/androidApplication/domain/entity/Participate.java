@@ -32,6 +32,10 @@ public class Participate {
     @JoinColumn(name = "group_id")
     private Group group;
 
+    @OneToMany(mappedBy = "participate" ,fetch = FetchType.LAZY ,orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<UploadFile> uploadFile = new ArrayList<>();
+
+
     public static Participate CreateParticipate(boolean master, Member member, Group group) {
         Participate participate = new Participate();
         participate.participateMember(member,group);

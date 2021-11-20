@@ -3,8 +3,16 @@ package com.example.androidApplication.repository;
 import com.example.androidApplication.domain.entity.Member;
 import com.example.androidApplication.domain.entity.Participate;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface ParticipateRepository extends JpaRepository<Participate, Long> {
+    @Query("select p from Participate p join fetch p.group g join fetch p.member m where g.inviteKey=:inviteKey and m.id =:memberId")
+    public Optional<Participate> findParticipateInfo(@Param("inviteKey") String inviteKey,
+                                                     @Param("memberId") Long memberId);
 }

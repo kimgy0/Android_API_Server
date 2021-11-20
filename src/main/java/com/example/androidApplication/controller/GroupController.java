@@ -2,16 +2,24 @@ package com.example.androidApplication.controller;
 
 import com.example.androidApplication.auth.PrincipalDetails;
 import com.example.androidApplication.bean.Error;
+import com.example.androidApplication.bean.FileStore;
 import com.example.androidApplication.domain.dto.GroupManageDto;
+import com.example.androidApplication.domain.dto.StudyDto;
+import com.example.androidApplication.domain.entity.UploadFile;
 import com.example.androidApplication.service.GroupService;
+import com.example.androidApplication.service.ParticipateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,9 +28,12 @@ import java.util.List;
 @Slf4j
 public class GroupController {
 
+    private final FileStore fileStore;
     private final GroupService groupService;
+    private final ParticipateService participateService;
     private final Error error;
 
+    //그룹 생성
     @PostMapping("/createGroup")
     public Object createGroup(@Valid @RequestBody GroupManageDto.GroupRegDto groupRegDto, BindingResult bindingResult,
                            @AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -37,6 +48,7 @@ public class GroupController {
         return null;
     }
 
+    //그룹 참가
     @PostMapping("/participateGroup")
     public Object participateGroup(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                    @Valid @RequestBody GroupManageDto.ParticipateDto participateDto,
@@ -49,6 +61,22 @@ public class GroupController {
         }
         groupService.joinGroup(participateDto.getKey(),principalDetails.getId());
         return null;
+    }
+
+    //인증 사진
+    @PostMapping("/pictureSend")
+    public void authPicture(@Valid @RequestBody StudyDto.ImageForm imageForm, BindingResult bindingResult,
+                              @AuthenticationPrincipal PrincipalDetails principalDetails,
+                              HttpServletRequest request){
+
+        MultipartFile imageFile = imageForm.getImageFile();
+        try {
+            UploadFile uploadFile = fileStore.storeImage(imageFile, request);
+            participateService.uploadImage(principalDetails.getId(), imageForm.getGroupId(),uploadFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
