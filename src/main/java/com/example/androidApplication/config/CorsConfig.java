@@ -2,6 +2,7 @@ package com.example.androidApplication.config;
 
 
 
+import com.example.androidApplication.AndroidApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,7 @@ import javax.lang.model.type.ArrayType;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan
+@ComponentScan(basePackages = "com.example.androidApplication")
 public class CorsConfig {
     @Bean
     public CorsFilter corsFilter(){

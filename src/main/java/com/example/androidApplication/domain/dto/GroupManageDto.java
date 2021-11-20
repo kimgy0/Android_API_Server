@@ -45,4 +45,14 @@ public class GroupManageDto {
         @JsonFormat(pattern = "HH:mm")
         private LocalTime localTime;
     }
+
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ParticipateDto {
+        @NotNull(message = "invalid uuid")
+        private String key;
+    }
 }

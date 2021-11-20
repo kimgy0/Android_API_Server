@@ -1,31 +1,17 @@
 package com.example.androidApplication.controller;
 
 import com.example.androidApplication.auth.PrincipalDetails;
-import com.example.androidApplication.domain.dto.FieldErrorDto;
+import com.example.androidApplication.bean.Error;
 import com.example.androidApplication.domain.dto.GroupManageDto;
-import com.example.androidApplication.domain.dto.MemberManageDto;
-import com.example.androidApplication.domain.entity.Group;
-import com.example.androidApplication.domain.entity.Member;
-import com.example.androidApplication.domain.entity.Participate;
-import com.example.androidApplication.domain.entity.TimeList;
 import com.example.androidApplication.service.GroupService;
-import com.example.androidApplication.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,6 +21,7 @@ import java.util.List;
 public class GroupController {
 
     private final GroupService groupService;
+    private final Error error;
 
     @PostMapping("/createGroup")
     public Object createGroup(@Valid @RequestBody GroupManageDto.GroupRegDto groupRegDto, BindingResult bindingResult,
@@ -42,19 +29,25 @@ public class GroupController {
                            HttpServletResponse response){
 
         log.info("create group 진입");
-        List<FieldErrorDto.ErrorDto> errorDtoList = new ArrayList<>();
-
-        for (ObjectError allError : bindingResult.getAllErrors()) {
-            FieldErrorDto.ErrorDto errorDto = new FieldErrorDto.ErrorDto(allError.getCode(), allError.getDefaultMessage());
-            errorDtoList.add(errorDto);
+        List list = error.errorSave(bindingResult, response);
+        if(list != null){
+            return list;
         }
-
-        if(bindingResult.hasErrors()){
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return errorDtoList;
-        }
-
         groupService.addGroup(principalDetails.getId(),groupRegDto);
+        return null;
+    }
+
+    @PostMapping("/participateGroup")
+    public Object participateGroup(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                   @Valid @RequestBody GroupManageDto.ParticipateDto participateDto,
+                                   BindingResult bindingResult,
+                                   HttpServletResponse response){
+
+        List list = error.errorSave(bindingResult, response);
+        if(list != null) {
+            return list;
+        }
+        groupService.joinGroup(participateDto.getKey(),principalDetails.getId());
         return null;
     }
 

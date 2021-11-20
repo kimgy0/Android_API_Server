@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -21,6 +23,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private Long id;
+    private String inviteKey = UUID.randomUUID().toString();
     private String groupName;
     private Long certifyDayNumber;
     private String comment;

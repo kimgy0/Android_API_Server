@@ -10,6 +10,7 @@ import com.example.androidApplication.repository.MemberRepository;
 import com.example.androidApplication.repository.ParticipateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GroupService {
 
     private final MemberRepository memberRepository;
@@ -37,6 +39,7 @@ public class GroupService {
 //    }
 //
 //    Participate participate = Participate.CreateParticipate(true, member, group);
+    @Transactional
     public void addGroup(Long id, GroupManageDto.GroupRegDto groupRegDto) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NullPointerException("not exist find user"));
         Group group = Group.createGroup(groupRegDto.getSubject(), groupRegDto.getCertifyNumber(), groupRegDto.getComment());
@@ -55,5 +58,14 @@ public class GroupService {
         groupRepository.save(group);
         participateRepository.save(participate);
 
+    }
+
+    @Transactional
+    public void joinGroup(String key, Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new NumberFormatException());
+        Group group = groupRepository.findByInviteKey(key).orElseThrow(() -> new NumberFormatException());
+
+        Participate participate = Participate.CreateParticipate(false, member, group);
+        participateRepository.save(participate);
     }
 }
