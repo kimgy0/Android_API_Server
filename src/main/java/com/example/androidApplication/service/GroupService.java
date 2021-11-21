@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +30,6 @@ public class GroupService {
         return save.getId();
     }
 
-    //    Member member = memberService.findMember(principalDetails.getId());
-//    Group group = Group.createGroup(groupRegDto.getSubject(), groupRegDto.getCertifyNumber(), groupRegDto.getComment());
-//
-//        for (LocalDate date : groupRegDto.getLocalDate()) {
-//        TimeList time = new TimeList(date);
-//    }
-//
-//    Participate participate = Participate.CreateParticipate(true, member, group);
     @Transactional
     public void addGroup(Long id, GroupManageDto.GroupRegDto groupRegDto) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NullPointerException("not exist find user"));
@@ -60,12 +51,23 @@ public class GroupService {
 
     }
 
+
+    // 그룹 추가
     @Transactional
-    public void joinGroup(String key, Long id) {
+    public String joinGroup(String key, Long id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NumberFormatException());
         Group group = groupRepository.findByInviteKey(key).orElseThrow(() -> new NumberFormatException());
 
         Participate participate = Participate.CreateParticipate(false, member, group);
         participateRepository.save(participate);
+        return group.getInviteKey();
     }
+
+
+    public List<GroupManageDto.MyGroupList> findMyGroupList(Long id) {
+        return groupRepository.findMyAllGroup(id);
+    }
+
+
+
 }

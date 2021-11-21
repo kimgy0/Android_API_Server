@@ -5,12 +5,12 @@ import com.example.androidApplication.bean.Error;
 import com.example.androidApplication.bean.FileStore;
 import com.example.androidApplication.domain.dto.GroupManageDto;
 import com.example.androidApplication.domain.dto.StudyDto;
+import com.example.androidApplication.domain.dto.common.ReturnDto;
 import com.example.androidApplication.domain.entity.UploadFile;
 import com.example.androidApplication.service.GroupService;
 import com.example.androidApplication.service.ParticipateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -59,8 +59,8 @@ public class GroupController {
         if(list != null) {
             return list;
         }
-        groupService.joinGroup(participateDto.getKey(),principalDetails.getId());
-        return null;
+
+        return groupService.joinGroup(participateDto.getKey(),principalDetails.getId());
     }
 
     //인증 사진
@@ -77,6 +77,15 @@ public class GroupController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //메인화면 : 메인에 보이는 내가 가입한 그룹과 내가 생성한 그룹을 출력
+    @PostMapping("/printGroups")
+    public ReturnDto<List<GroupManageDto.MyGroupList>> printAllMyGroup(@AuthenticationPrincipal PrincipalDetails principalDetails){
+
+        ReturnDto<List<GroupManageDto.MyGroupList>> returnDto = new ReturnDto<>();
+        returnDto.setData(groupService.findMyGroupList(principalDetails.getId()));
+        return returnDto;
     }
 
 }

@@ -22,6 +22,10 @@ public class Participate {
     @Column(name = "participate_id")
     private Long id;
 
+    private int absent;
+    private int tardy;
+
+
     private boolean Master;
 
     @ManyToOne(fetch = FetchType.LAZY)
