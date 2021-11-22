@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Entity
 @Setter
-@Table(name = "participates")
 public class Participate {
 
     @Id
@@ -22,8 +21,8 @@ public class Participate {
     @Column(name = "participate_id")
     private Long id;
 
-    private int absent;
-    private int tardy;
+    private int absent = 0;
+    private int tardy = 0;
 
 
     private boolean Master;

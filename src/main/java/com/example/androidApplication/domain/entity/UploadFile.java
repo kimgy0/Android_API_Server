@@ -13,13 +13,12 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "fileuploadtable")
 public class UploadFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uploadfile_id")
-    private String id;
+    private Long id;
     private String uploadFileName;
     private String storeFileName;
     private LocalDateTime localDateTime;

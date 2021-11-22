@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-@Table(name = "times")
 public class TimeList {
 
     @Id
