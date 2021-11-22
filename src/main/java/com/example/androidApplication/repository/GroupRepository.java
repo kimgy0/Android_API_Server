@@ -1,6 +1,7 @@
 package com.example.androidApplication.repository;
 
 import com.example.androidApplication.domain.dto.GroupManageDto;
+import com.example.androidApplication.domain.dto.jpqldto.MyGroupList;
 import com.example.androidApplication.domain.entity.Group;
 import com.example.androidApplication.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,11 +16,11 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
     Optional<Group> findByInviteKey(String key);
-    @Query("select new com.example.androidApplication.domain.dto.GroupManageDto.MyGroupList(g.groupName, g.inviteKey, p.absent, p.tardy, p.Master)" +
+    @Query("select new com.example.androidApplication.domain.dto.jpqldto.MyGroupList(g.groupName,g.inviteKey,p.absent,p.tardy,p.Master)" +
             " from Participate p" +
-            " join Member m" +
-            " join Group g" +
-            " on m.id = :id")
-    List<GroupManageDto.MyGroupList> findMyAllGroup(@Param("id") Long id);
+            " join p.member m" +
+            " join p.group g" +
+            " on m.id = :id" )
+    List<MyGroupList> findMyAllGroup(@Param("id") Long id);
 
 }

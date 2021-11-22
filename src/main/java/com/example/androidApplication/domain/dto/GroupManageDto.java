@@ -56,17 +56,4 @@ public class GroupManageDto {
         private String key;
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class MyGroupList {
-        private String inviteKey;
-        private String groupName;
-        private int absent;
-        private int tardy;
-        private boolean master;
-
-
-    }
 }

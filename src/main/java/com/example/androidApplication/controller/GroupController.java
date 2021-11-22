@@ -6,6 +6,7 @@ import com.example.androidApplication.bean.FileStore;
 import com.example.androidApplication.domain.dto.GroupManageDto;
 import com.example.androidApplication.domain.dto.StudyDto;
 import com.example.androidApplication.domain.dto.common.ReturnDto;
+import com.example.androidApplication.domain.dto.jpqldto.MyGroupList;
 import com.example.androidApplication.domain.entity.UploadFile;
 import com.example.androidApplication.service.GroupService;
 import com.example.androidApplication.service.ParticipateService;
@@ -81,10 +82,10 @@ public class GroupController {
 
     //메인화면 : 메인에 보이는 내가 가입한 그룹과 내가 생성한 그룹을 출력
     @PostMapping("/printGroups")
-    public ReturnDto<List<GroupManageDto.MyGroupList>> printAllMyGroup(@AuthenticationPrincipal PrincipalDetails principalDetails){
-
-        ReturnDto<List<GroupManageDto.MyGroupList>> returnDto = new ReturnDto<>();
-        returnDto.setData(groupService.findMyGroupList(principalDetails.getId()));
+    public ReturnDto<List<MyGroupList>> printAllMyGroup(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        List<MyGroupList> myGroupList = groupService.findMyGroupList(principalDetails.getId());
+        ReturnDto<List<MyGroupList>> returnDto = new ReturnDto<>();
+        returnDto.setData(myGroupList);
         return returnDto;
     }
 
