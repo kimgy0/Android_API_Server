@@ -42,7 +42,7 @@ public class ParticipateService {
                 .entrySet().stream()
                 .map(e -> new GroupManageDto.GroupInInfoDto(e.getKey().getGroupName(), e.getKey().getComment(), e.getValue())).collect(toList());
 
-
+        return result.get(0);
 
        /* <MyGroupInfoDto> collect = myGroup.stream()
                 .collect(groupingBy(g ->
@@ -58,7 +58,5 @@ public class ParticipateService {
                 .map(e -> new MyGroupInfoDto(e.getKey().getComment(), e.getKey().getGroupName(), e.getKey().getUsername(), e.getKey().getAbsent(), e.getKey().getTardy(), e.getKey().isMaster(), e.getKey().getUserId(), e.getValue()))
                 .collect(toList());
 */
-
-        return result;
     }
 }
