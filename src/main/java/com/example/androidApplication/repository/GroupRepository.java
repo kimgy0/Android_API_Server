@@ -20,7 +20,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
             " join p.member m" +
             " join p.group g" +
             " on m.id = :id" )
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+//    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<MyGroupListQueryDto> findMyAllGroup(@Param("id") Long id);
 
 

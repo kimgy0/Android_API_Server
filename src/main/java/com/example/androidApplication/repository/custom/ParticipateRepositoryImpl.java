@@ -14,7 +14,7 @@ public class ParticipateRepositoryImpl implements ParticipateRepositoryCustom{
     private EntityManager em;
 
     @Override
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+//    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     public List<MyGroupInfoQueryDto> findMyGroup(String key) {
         return em.createQuery("select new com.example.androidApplication.domain.dto.jpqldto.MyGroupInfoQueryDto(g.comment,g.groupName,p.absent,p.tardy,p.Master,m.id,m.username)" +
                 " from Participate p" +

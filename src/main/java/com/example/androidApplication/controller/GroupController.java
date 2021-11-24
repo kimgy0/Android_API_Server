@@ -91,6 +91,7 @@ public class GroupController {
         return returnDto;
     }
 
+    //그룹 내부정보
     @GetMapping("/printInGroup/{inviteKey}")
     public Object printAllInGroup(@PathVariable("inviteKey") String inviteKey,
                                   @AuthenticationPrincipal PrincipalDetails principalDetails){

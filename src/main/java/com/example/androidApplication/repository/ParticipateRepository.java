@@ -20,7 +20,7 @@ public interface ParticipateRepository extends JpaRepository<Participate, Long>,
             "join fetch p.group g " +
             "join fetch p.member m " +
             "where g.inviteKey=:inviteKey and m.id =:memberId")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+//    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     public Optional<Participate> findParticipateInfo(@Param("inviteKey") String inviteKey,
                                                      @Param("memberId") Long memberId);
 
