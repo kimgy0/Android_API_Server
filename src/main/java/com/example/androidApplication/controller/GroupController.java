@@ -83,16 +83,19 @@ public class GroupController {
     }
 
     //메인화면 : 메인에 보이는 내가 가입한 그룹과 내가 생성한 그룹을 출력
-    @GetMapping("/printGroups")
+    //GET
+    @RequestMapping("/printGroups")
     public ReturnDto<List<MyGroupListQueryDto>> printAllMyGroup(@AuthenticationPrincipal PrincipalDetails principalDetails){
         List<MyGroupListQueryDto> myGroupListQueryDto = groupService.findMyGroupList(principalDetails.getId());
         ReturnDto<List<MyGroupListQueryDto>> returnDto = new ReturnDto<>();
         returnDto.setData(myGroupListQueryDto);
+        log.info(returnDto.toString());
         return returnDto;
     }
 
     //그룹 내부정보
-    @GetMapping("/printInGroup/{inviteKey}")
+    //GET
+    @RequestMapping("/printInGroup/{inviteKey}")
     public Object printAllInGroup(@PathVariable("inviteKey") String inviteKey,
                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
         return participateService.findInGroup(inviteKey,principalDetails.getId());
