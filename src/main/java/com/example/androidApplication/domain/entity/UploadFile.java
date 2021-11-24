@@ -21,7 +21,7 @@ public class UploadFile {
     private Long id;
     private String uploadFileName;
     private String storeFileName;
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTime = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "participate_id")

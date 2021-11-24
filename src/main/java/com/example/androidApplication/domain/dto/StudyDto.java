@@ -23,7 +23,6 @@ public class StudyDto {
     public class ImageForm {
 
         private String groupId;
-
         @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         private LocalDateTime localDateTime = LocalDateTime.now();
         @NotEmpty(message = "imageFile error")

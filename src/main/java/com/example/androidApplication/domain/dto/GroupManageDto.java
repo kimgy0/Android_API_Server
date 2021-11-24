@@ -1,5 +1,6 @@
 package com.example.androidApplication.domain.dto;
 
+import com.example.androidApplication.domain.dto.jpqldto.GroupUserDto;
 import com.example.androidApplication.domain.entity.TimeList;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,16 @@ public class GroupManageDto {
     public static class ParticipateDto {
         @NotNull(message = "invalid uuid")
         private String key;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class GroupInInfoDto {
+        private String groupName;
+        private String comment;
+        private List<GroupUserDto> users;
     }
 
 }

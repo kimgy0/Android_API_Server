@@ -6,7 +6,7 @@ import com.example.androidApplication.bean.FileStore;
 import com.example.androidApplication.domain.dto.GroupManageDto;
 import com.example.androidApplication.domain.dto.StudyDto;
 import com.example.androidApplication.domain.dto.common.ReturnDto;
-import com.example.androidApplication.domain.dto.jpqldto.MyGroupList;
+import com.example.androidApplication.domain.dto.jpqldto.MyGroupListQueryDto;
 import com.example.androidApplication.domain.entity.UploadFile;
 import com.example.androidApplication.service.GroupService;
 import com.example.androidApplication.service.ParticipateService;
@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
@@ -81,12 +83,19 @@ public class GroupController {
     }
 
     //메인화면 : 메인에 보이는 내가 가입한 그룹과 내가 생성한 그룹을 출력
-    @PostMapping("/printGroups")
-    public ReturnDto<List<MyGroupList>> printAllMyGroup(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        List<MyGroupList> myGroupList = groupService.findMyGroupList(principalDetails.getId());
-        ReturnDto<List<MyGroupList>> returnDto = new ReturnDto<>();
-        returnDto.setData(myGroupList);
+    @GetMapping("/printGroups")
+    public ReturnDto<List<MyGroupListQueryDto>> printAllMyGroup(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        List<MyGroupListQueryDto> myGroupListQueryDto = groupService.findMyGroupList(principalDetails.getId());
+        ReturnDto<List<MyGroupListQueryDto>> returnDto = new ReturnDto<>();
+        returnDto.setData(myGroupListQueryDto);
         return returnDto;
+    }
+
+    @GetMapping("/printInGroup/{inviteKey}")
+    public Object printAllInGroup(@PathVariable("inviteKey") String inviteKey,
+                                  @AuthenticationPrincipal PrincipalDetails principalDetails){
+        return participateService.findInGroup(inviteKey,principalDetails.getId());
+        
     }
 
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyGroupList {
+public class MyGroupListQueryDto {
     private String inviteKey;
     private String groupName;
     private int absent;

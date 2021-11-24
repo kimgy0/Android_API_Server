@@ -1,7 +1,7 @@
 package com.example.androidApplication.service;
 
 import com.example.androidApplication.domain.dto.GroupManageDto;
-import com.example.androidApplication.domain.dto.jpqldto.MyGroupList;
+import com.example.androidApplication.domain.dto.jpqldto.MyGroupListQueryDto;
 import com.example.androidApplication.domain.entity.Group;
 import com.example.androidApplication.domain.entity.Member;
 import com.example.androidApplication.domain.entity.Participate;
@@ -65,10 +65,9 @@ public class GroupService {
     }
 
 
-    public List<MyGroupList> findMyGroupList(Long id) {
+    public List<MyGroupListQueryDto> findMyGroupList(Long id) {
         return groupRepository.findMyAllGroup(id);
     }
-
 
 
 }
