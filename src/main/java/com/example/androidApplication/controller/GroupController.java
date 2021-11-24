@@ -95,7 +95,7 @@ public class GroupController {
     public Object printAllInGroup(@PathVariable("inviteKey") String inviteKey,
                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
         return participateService.findInGroup(inviteKey,principalDetails.getId());
-        
+
     }
 
 }
