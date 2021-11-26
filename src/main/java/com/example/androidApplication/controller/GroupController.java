@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/")
 @RequiredArgsConstructor
 @Slf4j
 public class GroupController {
@@ -67,15 +67,18 @@ public class GroupController {
     }
 
     //인증 사진
-    @PostMapping("/pictureSend")
-    public void authPicture(@Valid @RequestBody StudyDto.ImageForm imageForm, BindingResult bindingResult,
-                              @AuthenticationPrincipal PrincipalDetails principalDetails,
-                              HttpServletRequest request){
+    @PostMapping(value = "/pictureSend")
+    public void authPicture(@RequestParam MultipartFile imageFile,
+                            @RequestParam String groupId,
+                            BindingResult bindingResult,
+                            @AuthenticationPrincipal PrincipalDetails principalDetails,
+                            HttpServletRequest request){
 
-        MultipartFile imageFile = imageForm.getImageFile();
+
         try {
+
             UploadFile uploadFile = fileStore.storeImage(imageFile, request);
-            participateService.uploadImage(principalDetails.getId(), imageForm.getGroupId(),uploadFile);
+            participateService.uploadImage(principalDetails.getId(), groupId,uploadFile);
 
         } catch (IOException e) {
             e.printStackTrace();
