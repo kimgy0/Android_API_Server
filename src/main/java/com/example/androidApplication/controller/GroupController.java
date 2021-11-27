@@ -105,9 +105,12 @@ public class GroupController {
 
     }
 
+
+    //http://15.165.219.73:2000/api/user/delete/
     @RequestMapping("/delete/{inviteKey}")
     public void deleteMember(@PathVariable("inviteKey") String inviteKey,
                              @AuthenticationPrincipal PrincipalDetails principalDetails){
+        log.info("invite key {} "+inviteKey);
         participateService.removerParticipate(inviteKey,principalDetails.getId());
     }
 
