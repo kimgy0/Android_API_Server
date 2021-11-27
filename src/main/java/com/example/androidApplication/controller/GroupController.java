@@ -3,8 +3,8 @@ package com.example.androidApplication.controller;
 import com.example.androidApplication.auth.PrincipalDetails;
 import com.example.androidApplication.bean.Error;
 import com.example.androidApplication.bean.FileStore;
+import com.example.androidApplication.domain.dto.AlarmDto;
 import com.example.androidApplication.domain.dto.GroupManageDto;
-import com.example.androidApplication.domain.dto.StudyDto;
 import com.example.androidApplication.domain.dto.common.ReturnDto;
 import com.example.androidApplication.domain.dto.jpqldto.MyGroupListQueryDto;
 import com.example.androidApplication.domain.entity.UploadFile;
@@ -20,9 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -112,6 +111,18 @@ public class GroupController {
                              @AuthenticationPrincipal PrincipalDetails principalDetails){
         log.info("invite key {} "+inviteKey);
         participateService.removerParticipate(inviteKey,principalDetails.getId());
+    }
+
+    //http://15.165.219.73:2000/api/alarm/delete/
+    @RequestMapping("/dalarm/{inviteKey}")
+    public ReturnDto<ArrayList<AlarmDto.AlarmTime>> deleteMember(@PathVariable("inviteKey") String inviteKey){
+        log.info("invite key {} "+inviteKey);
+        ArrayList<AlarmDto.AlarmTime> alarm = groupService.alarm(inviteKey);
+        ReturnDto<ArrayList<AlarmDto.AlarmTime>> objectReturnDto = new ReturnDto<>();
+        objectReturnDto.setData(alarm);
+        return objectReturnDto;
+
+
     }
 
 }

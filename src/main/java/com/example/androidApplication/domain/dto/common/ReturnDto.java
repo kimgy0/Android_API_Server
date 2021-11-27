@@ -8,4 +8,5 @@ import javax.persistence.GeneratedValue;
 @Data
 public class ReturnDto<T> {
     T data;
+
 }

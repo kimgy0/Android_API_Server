@@ -1,5 +1,6 @@
 package com.example.androidApplication.service;
 
+import com.example.androidApplication.domain.dto.AlarmDto;
 import com.example.androidApplication.domain.dto.GroupManageDto;
 import com.example.androidApplication.domain.dto.jpqldto.MyGroupListQueryDto;
 import com.example.androidApplication.domain.entity.Group;
@@ -67,6 +68,19 @@ public class GroupService {
 
     public List<MyGroupListQueryDto> findMyGroupList(Long id) {
         return groupRepository.findMyAllGroup(id);
+    }
+
+    public ArrayList<AlarmDto.AlarmTime> alarm(String inviteKey){
+        List<AlarmDto> byKey = groupRepository.findMyTimeListBy(inviteKey);
+        ArrayList<AlarmDto.AlarmTime> objects = new ArrayList<>();
+        byKey.forEach(i->{
+            int hour = i.getLocalTime().getHour();
+            int minute = i.getLocalTime().getMinute();
+            AlarmDto.AlarmTime alarmTime = new AlarmDto.AlarmTime(hour, minute);
+            objects.add(alarmTime);
+        });
+
+        return objects;
     }
 
 
