@@ -105,4 +105,10 @@ public class GroupController {
 
     }
 
+    @RequestMapping("/delete/{inviteKey}")
+    public void deleteMember(@PathVariable("inviteKey") String inviteKey,
+                             @AuthenticationPrincipal PrincipalDetails principalDetails){
+        participateService.removerParticipate(inviteKey,principalDetails.getId());
+    }
+
 }

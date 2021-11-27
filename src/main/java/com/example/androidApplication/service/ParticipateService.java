@@ -59,4 +59,11 @@ public class ParticipateService {
                 .collect(toList());
 */
     }
+
+    @Transactional
+    public void removerParticipate(String inviteKey, Long id){
+        Participate participate = participateRepository.findParticipateInfo(inviteKey, id).orElseThrow(() -> new NullPointerException());
+        participate.deleteMember();
+        participateRepository.delete(participate);
+    }
 }

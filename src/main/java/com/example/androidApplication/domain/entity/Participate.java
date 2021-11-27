@@ -56,4 +56,9 @@ public class Participate {
             group.getParticipates().add(this);
         }
     }
+
+    public void deleteMember(){
+        group.getParticipates().remove(this);
+        member.getParticipate().remove(this);
+    }
 }
