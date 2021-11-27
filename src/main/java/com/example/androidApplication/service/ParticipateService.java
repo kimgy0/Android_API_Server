@@ -63,7 +63,11 @@ public class ParticipateService {
     @Transactional
     public void removerParticipate(String inviteKey, Long id){
         Participate participate = participateRepository.findParticipateInfo(inviteKey, id).orElseThrow(() -> new NullPointerException());
-        participate.deleteMember();
-        participateRepository.delete(participate);
+        if(participate.isMaster()){
+            groupRepository.delete(participate.getGroup());
+        }else{
+            participate.deleteMember();
+            participateRepository.delete(participate);
+        }
     }
 }

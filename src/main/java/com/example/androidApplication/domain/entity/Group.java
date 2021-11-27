@@ -40,7 +40,7 @@ public class Group {
         return group;
     }
 
-    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participate> participates = new ArrayList<>();
 
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
