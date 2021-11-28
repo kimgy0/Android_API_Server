@@ -1,7 +1,7 @@
 <h3>Android API Server</h3>
 
 <hr>
-![](E:\androidAPI\androidApplication\img.PNG)
+![](img.PNG)
 
 ​				그:숲은 스터디를 목적으로하는 그룹에서 정해진 시간에 카메라로 사진을 찍어 
 
