@@ -113,8 +113,8 @@ public class GroupController {
         participateService.removerParticipate(inviteKey,principalDetails.getId());
     }
 
-    //http://15.165.219.73:2000/api/alarm/delete/
-    @RequestMapping("/dalarm/{inviteKey}")
+    //http://15.165.219.73:2000/api/user/alarm/
+    @RequestMapping("/alarm/{inviteKey}")
     public ReturnDto<ArrayList<AlarmDto.AlarmTime>> deleteMember(@PathVariable("inviteKey") String inviteKey){
         log.info("invite key {} "+inviteKey);
         ArrayList<AlarmDto.AlarmTime> alarm = groupService.alarm(inviteKey);
