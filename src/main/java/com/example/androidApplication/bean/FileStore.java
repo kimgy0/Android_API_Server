@@ -1,6 +1,7 @@
 package com.example.androidApplication.bean;
 
 import com.example.androidApplication.domain.entity.UploadFile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,11 +16,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class FileStore {
 //    @Value("${file.dir}")
     private String fileDir;
 
     public String getFullPath(String fileName,HttpServletRequest request){
+        log.info(request.getServletContext().getRealPath("/"));
         return request.getServletContext().getRealPath("/") + fileName;
     }
     public UploadFile storeImage(MultipartFile multipartFile,HttpServletRequest request) throws IOException {

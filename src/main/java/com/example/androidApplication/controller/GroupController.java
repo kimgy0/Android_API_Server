@@ -38,8 +38,7 @@ public class GroupController {
     @PostMapping("/createGroup")
     public Object createGroup(@Valid @RequestBody GroupManageDto.GroupRegDto groupRegDto, BindingResult bindingResult,
                            @AuthenticationPrincipal PrincipalDetails principalDetails,
-                           HttpServletResponse response){
-
+                           HttpServletResponse response, HttpServletRequest request){
         log.info("create group 진입");
         List list = error.errorSave(bindingResult, response);
         if(list != null){
