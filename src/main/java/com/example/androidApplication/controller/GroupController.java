@@ -30,7 +30,6 @@ import java.util.List;
 @Slf4j
 public class GroupController {
 
-    private final FileStore fileStore;
     private final GroupService groupService;
     private final ParticipateService participateService;
     private final Error error;
@@ -65,23 +64,7 @@ public class GroupController {
         return groupService.joinGroup(participateDto.getKey(),principalDetails.getId());
     }
 
-    //인증 사진
-    @PostMapping(value = "/pictureSend")
-    public void authPicture(@Valid @RequestBody GroupManageDto.GroupImage groupImage,
-                            BindingResult bindingResult,
-                            @AuthenticationPrincipal PrincipalDetails principalDetails,
-                            HttpServletRequest request){
 
-
-        try {
-
-            UploadFile uploadFile = fileStore.storeImage(groupImage.getImageFile(), request);
-            participateService.uploadImage(principalDetails.getId(), groupImage.getGroupId(),uploadFile);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     //메인화면 : 메인에 보이는 내가 가입한 그룹과 내가 생성한 그룹을 출력
     //GET
