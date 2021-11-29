@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -65,6 +67,20 @@ public class GroupManageDto {
         private String groupName;
         private String comment;
         private List<GroupUserDto> users;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class GroupImage {
+        @NotNull(message = "empty or null, i need value")
+        @NotEmpty(message = "empty or null, i need value")
+        private String groupId;
+
+        @NotNull(message = "empty or null, i need value")
+        @NotEmpty(message = "empty or null, i need value")
+        private MultipartFile imageFile;
     }
 
 }

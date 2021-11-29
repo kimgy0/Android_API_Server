@@ -67,8 +67,7 @@ public class GroupController {
 
     //인증 사진
     @PostMapping(value = "/pictureSend")
-    public void authPicture(@RequestParam MultipartFile imageFile,
-                            @RequestParam String groupId,
+    public void authPicture(@Valid @RequestBody GroupManageDto.GroupImage groupImage,
                             BindingResult bindingResult,
                             @AuthenticationPrincipal PrincipalDetails principalDetails,
                             HttpServletRequest request){
@@ -76,8 +75,8 @@ public class GroupController {
 
         try {
 
-            UploadFile uploadFile = fileStore.storeImage(imageFile, request);
-            participateService.uploadImage(principalDetails.getId(), groupId,uploadFile);
+            UploadFile uploadFile = fileStore.storeImage(groupImage.getImageFile(), request);
+            participateService.uploadImage(principalDetails.getId(), groupImage.getGroupId(),uploadFile);
 
         } catch (IOException e) {
             e.printStackTrace();
