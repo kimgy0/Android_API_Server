@@ -20,3 +20,7 @@ spring:
 
   logging.level:
     org.hibernate.SQL: debug
+
+file:
+  dir: /home/ubuntu/Android_API_Server/src/main/resources/
+

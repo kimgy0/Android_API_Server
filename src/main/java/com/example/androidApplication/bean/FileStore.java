@@ -18,12 +18,11 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class FileStore {
-//    @Value("${file.dir}")
+    @Value("${file.dir}")
     private String fileDir;
 
     public String getFullPath(String fileName,HttpServletRequest request){
-        log.info(request.getServletContext().getRealPath("/"));
-        return request.getServletContext().getRealPath("/") + fileName;
+        return fileDir + fileName;
     }
     public UploadFile storeImage(MultipartFile multipartFile,HttpServletRequest request) throws IOException {
 
