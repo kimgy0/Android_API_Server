@@ -36,13 +36,10 @@ public class ImageController {
                             @RequestParam MultipartFile imageFile,
                             @AuthenticationPrincipal PrincipalDetails principalDetails,
                             HttpServletRequest request){
-        try {
 
-            UploadFile uploadFile = fileStore.storeImage(imageFile, request);
-            participateService.uploadImage(principalDetails.getId(), groupId,uploadFile);
+        UploadFile uploadFile = fileStore.storeImage(imageFile, request);
+        participateService.uploadImage(principalDetails.getId(), groupId,uploadFile);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 }

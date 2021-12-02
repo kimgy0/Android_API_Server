@@ -20,22 +20,39 @@
 
 
 
+##### 🔗 Link 
+
+<hr>
+
+프로젝트 후기(링크예정)
+
+프로젝트 설명(링크예정)
+
+API명세(링크예정)
+
+
+
 <h5>💻  use Tech</h5>
 
 <hr>
+
+###### - Tech
+
 <img src="사용기술.PNG" alt="50" style="zoom:60%;" />
 
 
 
-<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"><img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
-
-<img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"><img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=aws&logoColor=white"><img src="https://img.shields.io/badge/Android-6DB33F?style=for-the-badge&logo=Android&logoColor=white">
-
-<img src="https://img.shields.io/badge/jenkins-E34F26?style=for-the-badge&logo=jenkins&logoColor=white">
 
 
+<center> <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"><img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+
+<center <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"><img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=aws&logoColor=white"><img src="https://img.shields.io/badge/Android-6DB33F?style=for-the-badge&logo=Android&logoColor=white"><img src="https://img.shields.io/badge/jenkins-E34F26?style=for-the-badge&logo=jenkins&logoColor=white"> 
 
 
+
+###### - DB Structure
+
+![image-20211202113247114](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20211202113247114.png)
 
 
 <h5>🖼  API and Function</h5>

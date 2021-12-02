@@ -24,13 +24,18 @@ public class FileStore {
     public String getFullPath(String fileName,HttpServletRequest request){
         return fileDir + fileName;
     }
-    public UploadFile storeImage(MultipartFile multipartFile,HttpServletRequest request) throws IOException {
+    public UploadFile storeImage(MultipartFile multipartFile,HttpServletRequest request) {
 
         if(!multipartFile.isEmpty()){
             String originalFilename = multipartFile.getOriginalFilename();
             String storeFileName = createStoreFileName(originalFilename);
 
-            multipartFile.transferTo(new File(getFullPath(storeFileName,request)));
+            try {
+                multipartFile.transferTo(new File(getFullPath(storeFileName,request)));
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.info("error");
+            }
 
             return new UploadFile(originalFilename,storeFileName);
         }else{
